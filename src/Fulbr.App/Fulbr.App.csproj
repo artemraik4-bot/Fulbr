@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fulbr.Core\Fulbr.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="H.NotifyIcon.Wpf" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Fulbr.ico" />
+    <Resource Include="Assets\Fulbr-256.png" />
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('..\..\vendor\sing-box\sing-box.exe')">
+    <None Include="..\..\vendor\sing-box\sing-box.exe" Link="engine\sing-box.exe"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="..\..\vendor\sing-box\libcronet.dll" Link="engine\libcronet.dll"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="..\..\vendor\sing-box\wintun.dll" Link="engine\wintun.dll"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="..\..\vendor\sing-box\LICENSE-Wintun.txt" Link="engine\LICENSE-Wintun.txt"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="..\..\vendor\sing-box\LICENSE" Link="engine\LICENSE-sing-box.txt"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>Fulbr</AssemblyName>
+    <RootNamespace>Fulbr.App</RootNamespace>
+    <ApplicationIcon>Assets\Fulbr.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Version>0.2.0</Version>
+    <Authors>Fulbr Contributors</Authors>
+    <Company>Fulbr</Company>
+    <Product>Fulbr</Product>
+    <Description>Privacy-focused Windows VPN and proxy client</Description>
+    <Copyright>GPL-3.0-or-later</Copyright>
+    <SatelliteResourceLanguages>en;ru</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+</Project>

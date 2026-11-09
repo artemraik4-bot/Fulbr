@@ -1,0 +1,855 @@
+﻿<Window x:Class="Fulbr.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="Fulbr"
+        Width="1240" Height="820" MinWidth="1040" MinHeight="680"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" ResizeMode="CanResize"
+        Background="{DynamicResource BgBrush}"
+        FontFamily="Segoe UI Variable Text, Segoe UI"
+        UseLayoutRounding="True" SnapsToDevicePixels="True">
+
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="0" ResizeBorderThickness="6"
+                            GlassFrameThickness="0" CornerRadius="0" />
+    </shell:WindowChrome.WindowChrome>
+
+    <Border Background="{DynamicResource BgBrush}" BorderBrush="{DynamicResource BorderBrush}"
+            BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="44" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Title bar -->
+            <Grid Grid.Row="0" Background="{DynamicResource TitleBarBrush}"
+                  MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Image Source="Assets/Fulbr-256.png" Width="20" Height="20" Margin="14,0,0,0"
+                       VerticalAlignment="Center" />
+                <TextBlock Grid.Column="1" Text="Fulbr" FontWeight="Bold" FontSize="13"
+                           VerticalAlignment="Center" Margin="8,0,0,0" />
+                <TextBlock Grid.Column="2" Text="Privacy, measured." Style="{StaticResource Caption}"
+                           VerticalAlignment="Center" Margin="12,0,0,0" />
+                <StackPanel Grid.Column="3" Orientation="Horizontal" Margin="0,0,8,0">
+                    <Button Content="☼" Style="{StaticResource TitleBarButton}"
+                            ToolTip="Toggle theme" Click="ThemeToggle_Click" />
+                    <Button Content="—" Style="{StaticResource TitleBarButton}"
+                            ToolTip="Minimize" Click="Minimize_Click" />
+                    <Button Content="▢" Style="{StaticResource TitleBarButton}"
+                            ToolTip="Maximize" Click="Maximize_Click" />
+                    <Button Content="✕" Style="{StaticResource TitleBarButton}"
+                            ToolTip="Close" Click="Close_Click" />
+                </StackPanel>
+            </Grid>
+
+            <!-- Main area -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="236" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Sidebar -->
+                <Border Grid.Column="0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Margin="18,18,18,10">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Assets/Fulbr-256.png" Width="38" Height="38" />
+                                <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="Fulbr" FontSize="18" FontWeight="SemiBold" />
+                                    <TextBlock Text="Privacy, measured." Style="{StaticResource Caption}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Margin="0,10,0,0">
+                            <RadioButton Style="{StaticResource NavButton}" Tag="◉"
+                                         Content="{Binding Loc[NavDashboard]}"
+                                         IsChecked="{Binding PageKey, Converter={StaticResource PageEquals}, ConverterParameter=Dashboard, Mode=OneWay}"
+                                         Command="{Binding NavigateCommand}" CommandParameter="Dashboard" />
+                            <RadioButton Style="{StaticResource NavButton}" Tag="▤"
+                                         Content="{Binding Loc[NavServers]}"
+                                         IsChecked="{Binding PageKey, Converter={StaticResource PageEquals}, ConverterParameter=Servers, Mode=OneWay}"
+                                         Command="{Binding NavigateCommand}" CommandParameter="Servers" />
+                            <RadioButton Style="{StaticResource NavButton}" Tag="⌁"
+                                         Content="{Binding Loc[NavDiagnostics]}"
+                                         IsChecked="{Binding PageKey, Converter={StaticResource PageEquals}, ConverterParameter=Diagnostics, Mode=OneWay}"
+                                         Command="{Binding NavigateCommand}" CommandParameter="Diagnostics" />
+                            <RadioButton Style="{StaticResource NavButton}" Tag="⇄"
+                                         Content="{Binding Loc[NavRouting]}"
+                                         IsChecked="{Binding PageKey, Converter={StaticResource PageEquals}, ConverterParameter=Routing, Mode=OneWay}"
+                                         Command="{Binding NavigateCommand}" CommandParameter="Routing" />
+                            <RadioButton Style="{StaticResource NavButton}" Tag="☁"
+                                         Content="{Binding Loc[NavSubscriptions]}"
+                                         IsChecked="{Binding PageKey, Converter={StaticResource PageEquals}, ConverterParameter=Subscriptions, Mode=OneWay}"
+                                         Command="{Binding NavigateCommand}" CommandParameter="Subscriptions" />
+                            <RadioButton Style="{StaticResource NavButton}" Tag="◆"
+                                         Content="{Binding Loc[NavSecurity]}"
+                                         IsChecked="{Binding PageKey, Converter={StaticResource PageEquals}, ConverterParameter=Security, Mode=OneWay}"
+                                         Command="{Binding NavigateCommand}" CommandParameter="Security" />
+                            <RadioButton Style="{StaticResource NavButton}" Tag="⚙"
+                                         Content="{Binding Loc[NavSettings]}"
+                                         IsChecked="{Binding PageKey, Converter={StaticResource PageEquals}, ConverterParameter=Settings, Mode=OneWay}"
+                                         Command="{Binding NavigateCommand}" CommandParameter="Settings" />
+                            <RadioButton Style="{StaticResource NavButton}" Tag="≡"
+                                         Content="{Binding Loc[NavLogs]}"
+                                         IsChecked="{Binding PageKey, Converter={StaticResource PageEquals}, ConverterParameter=Logs, Mode=OneWay}"
+                                         Command="{Binding NavigateCommand}" CommandParameter="Logs" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Margin="14,0,14,16">
+                            <Border Style="{StaticResource InnerCard}">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Ellipse Width="9" Height="9"
+                                                 Fill="{Binding ConnectionState, Converter={StaticResource ConnectionStateBrush}}"
+                                                 VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding SidebarStatusText}" FontWeight="SemiBold"
+                                                   Margin="8,0,0,0" TextTrimming="CharacterEllipsis" MaxWidth="150" />
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Loc[PrototypeNoTunnel]}" Style="{StaticResource Caption}"
+                                               Margin="0,5,0,0" />
+                                </StackPanel>
+                            </Border>
+                            <TextBlock Text="{Binding VersionShort}" Style="{StaticResource Caption}" Margin="2,10,0,0" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Content -->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="88" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="28,18,28,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="{Binding PageTitle}" Style="{StaticResource H1}" />
+                            <TextBlock Text="{Binding PageSubtitle}" Style="{StaticResource Muted}"
+                                       Margin="0,4,0,0" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal"
+                                    Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibility}}">
+                            <ProgressBar Width="110" Height="3" IsIndeterminate="True"
+                                         Foreground="{DynamicResource AccentBrush}"
+                                         Background="{DynamicResource Surface2Brush}" />
+                            <TextBlock Text="{Binding BusyText}" Style="{StaticResource Caption}"
+                                       Margin="10,0,0,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  Padding="28,0,28,24">
+                        <Grid>
+
+                            <!-- ================= DASHBOARD ================= -->
+                            <StackPanel Visibility="{Binding PageKey, Converter={StaticResource PageVisibility}, ConverterParameter=Dashboard}">
+                                <Border Style="{StaticResource Card}" Background="{DynamicResource WarnTintBrush}"
+                                        BorderBrush="{DynamicResource WarnBrush}">
+                                    <TextBlock Text="{Binding Loc[PrototypeBanner]}" TextWrapping="Wrap"
+                                               Foreground="{DynamicResource TextBrush}" />
+                                </Border>
+
+                                <Grid Margin="0,16,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.4*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Style="{StaticResource Card}">
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Ellipse Width="11" Height="11"
+                                                         Fill="{Binding ConnectionState, Converter={StaticResource ConnectionStateBrush}}"
+                                                         VerticalAlignment="Center" />
+                                                <TextBlock Text="{Binding ConnectionStateText}" Style="{StaticResource H2}"
+                                                           Margin="10,0,0,0" />
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding ConnectionDetail}"
+                                                       Style="{StaticResource Muted}" Margin="0,6,0,0" />
+                                            <Button Content="{Binding ConnectButtonText}" Style="{StaticResource PrimaryButton}"
+                                                    HorizontalAlignment="Left" Margin="0,18,0,0"
+                                                    Command="{Binding ToggleConnectionCommand}"
+                                                    IsEnabled="{Binding IsConnectEnabled}" />
+                                            <TextBlock Text="{Binding Loc[ProxyModeWarning]}"
+                                                       Style="{StaticResource Caption}" Margin="0,10,0,0"
+                                                       Foreground="{DynamicResource WarnBrush}" />
+                                            <Border Style="{StaticResource InnerCard}" Margin="0,12,0,0"
+                                                    Visibility="{Binding IsConnected, Converter={StaticResource BoolToVisibility}}">
+                                                <StackPanel>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Loc[ProxyEndpoint]}" Style="{StaticResource Caption}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProxyEndpoint}"
+                                                                   FontFamily="Consolas, Cascadia Mono" FontWeight="SemiBold"
+                                                                   Foreground="{DynamicResource AccentBrush}" />
+                                                    </Grid>
+                                                    <Grid Margin="0,4,0,0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Loc[ProxyUsername]}" Style="{StaticResource Caption}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProxyUsername}"
+                                                                   FontFamily="Consolas, Cascadia Mono" />
+                                                    </Grid>
+                                                    <Grid Margin="0,4,0,0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Loc[ProxyPassword]}" Style="{StaticResource Caption}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProxyPasswordMasked}"
+                                                                   FontFamily="Consolas, Cascadia Mono" />
+                                                    </Grid>
+                                                    <Button Content="{Binding Loc[CopyProxyUrl]}" Style="{StaticResource SecondaryButton}"
+                                                            HorizontalAlignment="Left" Margin="0,8,0,0"
+                                                            Command="{Binding CopyProxyUrlCommand}" />
+                                                    <TextBlock Text="{Binding Loc[ProxyCredentialsHint]}"
+                                                               Style="{StaticResource Caption}" Margin="0,6,0,0" />
+                                                </StackPanel>
+                                            </Border>
+                                            <Border Style="{StaticResource InnerCard}" Margin="0,18,0,0">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding Loc[SelectedServer]}" Style="{StaticResource Caption}" />
+                                                        <TextBlock Text="{Binding SelectedServerName}" Style="{StaticResource H3}"
+                                                                   Margin="0,3,0,0" TextTrimming="CharacterEllipsis" />
+                                                        <TextBlock Text="{Binding SelectedServerEndpoint}" Style="{StaticResource Muted}" />
+                                                    </StackPanel>
+                                                    <StackPanel Grid.Column="1">
+                                                        <TextBlock Text="{Binding Loc[Protocol]}" Style="{StaticResource Caption}" />
+                                                        <TextBlock Text="{Binding SelectedServerProtocol}" Style="{StaticResource H3}" Margin="0,3,0,0" />
+                                                        <TextBlock Text="{Binding SelectedServerLatency}" Style="{StaticResource Muted}" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="1" Style="{StaticResource Card}" Margin="16,0,0,0">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[SecuritySnapshot]}" Style="{StaticResource H3}" />
+                                            <Grid Margin="0,12,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Loc[KillSwitch]}" Style="{StaticResource Body}" />
+                                                <TextBlock Grid.Column="1" Text="{Binding Loc[NotAvailable]}"
+                                                           Foreground="{DynamicResource MutedBrush}" FontWeight="SemiBold" />
+                                            </Grid>
+                                            <Grid Margin="0,8,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Loc[DnsProtection]}" Style="{StaticResource Body}" />
+                                                <TextBlock Grid.Column="1" Text="{Binding DnsProtectionStatus}"
+                                                           Foreground="{DynamicResource WarnBrush}" FontWeight="SemiBold" />
+                                            </Grid>
+                                            <Grid Margin="0,8,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Loc[Ipv6]}" Style="{StaticResource Body}" />
+                                                <TextBlock Grid.Column="1" Text="{Binding Loc[NotTested]}"
+                                                           Foreground="{DynamicResource MutedBrush}" FontWeight="SemiBold" />
+                                            </Grid>
+                                            <Grid Margin="0,8,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Loc[Trust]}" Style="{StaticResource Body}" />
+                                                <TextBlock Grid.Column="1" Text="{Binding SelectedServerTrust}"
+                                                           Foreground="{Binding SelectedServerTrust, Converter={StaticResource TrustBrush}}"
+                                                           FontWeight="SemiBold" />
+                                            </Grid>
+                                            <TextBlock Text="{Binding Loc[TrustUnknownHelp]}" Style="{StaticResource Caption}"
+                                                       Margin="0,12,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <UniformGrid Columns="4" Margin="0,16,0,0">
+                                    <Border Style="{StaticResource Card}" Margin="0,0,8,0" Padding="14">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[Servers]}" Style="{StaticResource Caption}" />
+                                            <TextBlock Text="{Binding Servers.Count}" FontSize="26" FontWeight="SemiBold" Margin="0,3,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource Card}" Margin="4,0,4,0" Padding="14">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[Reachable]}" Style="{StaticResource Caption}" />
+                                            <TextBlock Text="{Binding ReachableCount}" FontSize="26" FontWeight="SemiBold" Margin="0,3,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource Card}" Margin="4,0,4,0" Padding="14">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[BestScore]}" Style="{StaticResource Caption}" />
+                                            <TextBlock Text="{Binding BestScoreText}" FontSize="26" FontWeight="SemiBold" Margin="0,3,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource Card}" Margin="8,0,0,0" Padding="14">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[LastCheck]}" Style="{StaticResource Caption}" />
+                                            <TextBlock Text="{Binding LastCheckText}" FontSize="18" FontWeight="SemiBold" Margin="0,6,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                </UniformGrid>
+
+                                <Grid Margin="0,16,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Style="{StaticResource Card}">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[QuickActions]}" Style="{StaticResource H3}" />
+                                            <WrapPanel Margin="0,10,0,0">
+                                                <Button Content="{Binding Loc[RefreshSubscriptions]}" Style="{StaticResource SecondaryButton}"
+                                                        Command="{Binding RefreshAllSourcesCommand}" Margin="0,0,8,8" />
+                                                <Button Content="{Binding Loc[PingAll]}" Style="{StaticResource SecondaryButton}"
+                                                        Command="{Binding PingAllCommand}" Margin="0,0,8,8"
+                                                        IsEnabled="{Binding IsNotBusy}" />
+                                                <Button Content="{Binding Loc[AddSource]}" Style="{StaticResource SecondaryButton}"
+                                                        Command="{Binding NavigateCommand}" CommandParameter="Subscriptions" Margin="0,0,8,8" />
+                                                <Button Content="{Binding Loc[NavServers]}" Style="{StaticResource SecondaryButton}"
+                                                        Command="{Binding NavigateCommand}" CommandParameter="Servers" Margin="0,0,8,8" />
+                                                <Button Content="{Binding Loc[ConnectBest]}" Style="{StaticResource SecondaryButton}"
+                                                        Command="{Binding ConnectBestCommand}" IsEnabled="{Binding IsNotBusy}" Margin="0,0,8,8" />
+                                            </WrapPanel>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Column="1" Style="{StaticResource Card}" Margin="16,0,0,0">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[SelectedServer]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="{Binding SelectedServerName}" Style="{StaticResource Body}" Margin="0,6,0,0" />
+                                            <TextBlock Text="{Binding SelectedServerEndpoint}" Style="{StaticResource Muted}" />
+                                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                                <TextBlock Text="{Binding SelectedServerStatus}" FontWeight="SemiBold"
+                                                           Foreground="{Binding SelectedServerStatus, Converter={StaticResource StatusBrush}}" />
+                                                <TextBlock Text=" · " Style="{StaticResource Muted}" />
+                                                <TextBlock Text="{Binding SelectedServerTrust}" FontWeight="SemiBold"
+                                                           Foreground="{Binding SelectedServerTrust, Converter={StaticResource TrustBrush}}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+
+                            <!-- ================= SERVERS ================= -->
+                            <StackPanel Visibility="{Binding PageKey, Converter={StaticResource PageVisibility}, ConverterParameter=Servers}">
+                                <Border Style="{StaticResource Card}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="150" />
+                                            <ColumnDefinition Width="150" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Margin="0,0,10,0">
+                                            <TextBlock Text="{Binding Loc[Search]}" Style="{StaticResource Caption}" />
+                                            <TextBox Style="{StaticResource Input}" Margin="0,4,0,0"
+                                                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                            <TextBlock Text="{Binding Loc[Protocol]}" Style="{StaticResource Caption}" />
+                                            <ComboBox Margin="0,4,0,0" SelectedValue="{Binding ProtocolFilter}"
+                                                      SelectedValuePath="Content">
+                                                <ComboBoxItem Content="All" />
+                                                <ComboBoxItem Content="VLESS" />
+                                                <ComboBoxItem Content="VMess" />
+                                                <ComboBoxItem Content="Trojan" />
+                                                <ComboBoxItem Content="Shadowsocks" />
+                                                <ComboBoxItem Content="Hysteria2" />
+                                                <ComboBoxItem Content="TUIC" />
+                                                <ComboBoxItem Content="SOCKS5" />
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                                            <TextBlock Text="{Binding Loc[Status]}" Style="{StaticResource Caption}" />
+                                            <ComboBox Margin="0,4,0,0" SelectedValue="{Binding StatusFilter}"
+                                                      SelectedValuePath="Content">
+                                                <ComboBoxItem Content="All" />
+                                                <ComboBoxItem Content="Reachable" />
+                                                <ComboBoxItem Content="Unavailable" />
+                                                <ComboBoxItem Content="Not tested" />
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                            <Button Content="{Binding Loc[PingAll]}" Style="{StaticResource PrimaryButton}"
+                                                    Command="{Binding PingAllCommand}" IsEnabled="{Binding IsNotBusy}" Margin="0,0,8,0" />
+                                            <Button Content="{Binding Loc[BestServer]}" Style="{StaticResource SecondaryButton}"
+                                                    Command="{Binding BestServerCommand}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+
+                                <Border Style="{StaticResource Card}" Margin="0,14,0,0" Padding="10">
+                                    <ListView Height="390" ItemsSource="{Binding ServersView}"
+                                              SelectedItem="{Binding SelectedServer, Mode=TwoWay}"
+                                              VirtualizingPanel.IsVirtualizing="True"
+                                              VirtualizingPanel.VirtualizationMode="Recycling">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Width="30">
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Content="{Binding FavoriteGlyph}" Style="{StaticResource GhostButton}"
+                                                                    FontSize="16" Padding="4,0"
+                                                                    Command="{Binding DataContext.ToggleFavoriteCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                    CommandParameter="{Binding}" />
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                                <GridViewColumn Header="Name" Width="170" DisplayMemberBinding="{Binding DisplayName}" />
+                                                <GridViewColumn Header="Protocol" Width="80" DisplayMemberBinding="{Binding ProtocolName}" />
+                                                <GridViewColumn Header="Endpoint" Width="165" DisplayMemberBinding="{Binding Endpoint}" />
+                                                <GridViewColumn Header="Source" Width="100" DisplayMemberBinding="{Binding SourceDisplay}" />
+                                                <GridViewColumn Header="Latency" Width="80" DisplayMemberBinding="{Binding LatencyText}" />
+                                                <GridViewColumn Header="Method" Width="95" DisplayMemberBinding="{Binding MethodText}" />
+                                                <GridViewColumn Header="Status" Width="85">
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Text="{Binding Status}" FontWeight="SemiBold"
+                                                                       Foreground="{Binding Status, Converter={StaticResource StatusBrush}}" />
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                                <GridViewColumn Header="Trust" Width="80">
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Text="{Binding Trust}" FontWeight="SemiBold"
+                                                                       Foreground="{Binding Trust, Converter={StaticResource TrustBrush}}" />
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                                <GridViewColumn Width="50">
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Content="Ping" Style="{StaticResource GhostButton}"
+                                                                    Command="{Binding DataContext.PingServerCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                    CommandParameter="{Binding}" />
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Border>
+
+                                <Grid Margin="0,14,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Style="{StaticResource Card}">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[SelectedServer]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="{Binding SelectedServerName}" Style="{StaticResource Body}" Margin="0,6,0,0" />
+                                            <TextBlock Text="{Binding SelectedServerEndpoint}" Style="{StaticResource Muted}" />
+                                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                                <Button Content="{Binding ConnectButtonText}" Style="{StaticResource PrimaryButton}"
+                                                        Command="{Binding ToggleConnectionCommand}" IsEnabled="{Binding IsConnectEnabled}"
+                                                        Margin="0,0,8,0" />
+                                                <Button Content="{Binding Loc[PingSelected]}" Style="{StaticResource SecondaryButton}"
+                                                        Command="{Binding PingSelectedCommand}" IsEnabled="{Binding IsNotBusy}" Margin="0,0,8,0" />
+                                                <Button Content="{Binding Loc[Ping]}" Style="{StaticResource SecondaryButton}"
+                                                        Command="{Binding PingServerCommand}" CommandParameter="{Binding SelectedServer}" />
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding ProxyEndpoint}" Style="{StaticResource Caption}"
+                                                       Margin="0,8,0,0" />
+                                            <TextBlock Text="{Binding SelectedServerWarnings}" Style="{StaticResource Caption}"
+                                                       Margin="0,10,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Column="1" Style="{StaticResource Card}" Margin="16,0,0,0">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[AddManualLink]}" Style="{StaticResource H3}" />
+                                            <TextBox Style="{StaticResource Input}" Margin="0,8,0,0"
+                                                     Text="{Binding NewManualLink, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Button Content="{Binding Loc[Add]}" Style="{StaticResource PrimaryButton}"
+                                                    HorizontalAlignment="Left" Margin="0,8,0,0"
+                                                    Command="{Binding AddManualLinkCommand}" />
+                                            <TextBlock Text="{Binding Loc[ImportSummary]}" Style="{StaticResource Caption}" Margin="0,10,0,0" />
+                                            <TextBlock Text="{Binding ImportSummary}" Style="{StaticResource Muted}" />
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+
+                            <!-- ================= SUBSCRIPTIONS ================= -->
+                            <StackPanel Visibility="{Binding PageKey, Converter={StaticResource PageVisibility}, ConverterParameter=Subscriptions}">
+                                <Border Style="{StaticResource Card}">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Loc[AddSource]}" Style="{StaticResource H3}" />
+                                        <Grid Margin="0,10,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="220" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Margin="0,0,10,0">
+                                                <TextBlock Text="{Binding Loc[NameLabel]}" Style="{StaticResource Caption}" />
+                                                <TextBox Style="{StaticResource Input}" Margin="0,4,0,0"
+                                                         Text="{Binding NewSourceName, UpdateSourceTrigger=PropertyChanged}" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                                <TextBlock Text="{Binding Loc[HttpsUrl]}" Style="{StaticResource Caption}" />
+                                                <TextBox Style="{StaticResource Input}" Margin="0,4,0,0"
+                                                         Text="{Binding NewSourceUrl, UpdateSourceTrigger=PropertyChanged}" />
+                                            </StackPanel>
+                                            <Button Grid.Column="2" Content="{Binding Loc[Add]}" Style="{StaticResource PrimaryButton}"
+                                                    VerticalAlignment="Bottom" Command="{Binding AddSourceCommand}" />
+                                        </Grid>
+                                        <TextBlock Text="{Binding Loc[AddSourceHint]}" Style="{StaticResource Caption}" Margin="0,8,0,0" />
+                                        <WrapPanel Margin="0,12,0,0">
+                                            <Button Content="{Binding Loc[RefreshSelected]}" Style="{StaticResource SecondaryButton}"
+                                                    Command="{Binding RefreshSourceCommand}" IsEnabled="{Binding IsNotBusy}" Margin="0,0,8,8" />
+                                            <Button Content="{Binding Loc[Remove]}" Style="{StaticResource SecondaryButton}"
+                                                    Command="{Binding RemoveSourceCommand}" Margin="0,0,8,8" />
+                                            <Button Content="{Binding Loc[AddRecommended]}" Style="{StaticResource SecondaryButton}"
+                                                    Command="{Binding AddRecommendedSourceCommand}" IsEnabled="{Binding IsNotBusy}" Margin="0,0,8,8" />
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource Card}" Margin="0,14,0,0" Padding="10">
+                                    <ListView Height="220" ItemsSource="{Binding Sources}"
+                                              SelectedItem="{Binding SelectedSource, Mode=TwoWay}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Name" Width="220" DisplayMemberBinding="{Binding Name}" />
+                                                <GridViewColumn Header="Host" Width="260" DisplayMemberBinding="{Binding HostDisplay}" />
+                                                <GridViewColumn Header="Servers" Width="80" DisplayMemberBinding="{Binding ServerCount}" />
+                                                <GridViewColumn Header="Last fetch" Width="150" DisplayMemberBinding="{Binding LastFetchText}" />
+                                                <GridViewColumn Header="Status" Width="100">
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Text="{Binding Status}" FontWeight="SemiBold"
+                                                                       Foreground="{Binding Status, Converter={StaticResource StatusBrush}}" />
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Border>
+
+                                <Border Style="{StaticResource Card}" Background="{DynamicResource WarnTintBrush}"
+                                        BorderBrush="{DynamicResource WarnBrush}" Margin="0,14,0,0">
+                                    <TextBlock Text="{Binding Loc[RecommendedSourceWarning]}" TextWrapping="Wrap" />
+                                </Border>
+                            </StackPanel>
+
+                            <!-- ================= DIAGNOSTICS ================= -->
+                            <StackPanel Visibility="{Binding PageKey, Converter={StaticResource PageVisibility}, ConverterParameter=Diagnostics}">
+                                <TextBlock Text="{Binding Loc[DiagnosticsMethods]}" Style="{StaticResource H2}" />
+                                <UniformGrid Columns="2" Margin="0,10,0,0">
+                                    <Border Style="{StaticResource Card}" Margin="0,0,8,8">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[TcpConnect]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="Measures the TCP handshake only. An open port is not proof that the proxy works." Style="{StaticResource Muted}" Margin="0,5,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource Card}" Margin="8,0,0,8">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[TlsHandshake]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="TCP + TLS handshake with certificate validation. Still not proof of authentication." Style="{StaticResource Muted}" Margin="0,5,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource Card}" Margin="0,8,8,0">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[ProtocolHandshake]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="Requires the engine. Not available in this build." Style="{StaticResource Muted}" Margin="0,5,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource Card}" Margin="8,8,0,0">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[HttpThroughTunnel]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="Requires the engine and a real tunnel. Not available in this build." Style="{StaticResource Muted}" Margin="0,5,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                </UniformGrid>
+
+                                <WrapPanel Margin="0,14,0,0">
+                                    <Button Content="{Binding Loc[RunPingAll]}" Style="{StaticResource PrimaryButton}"
+                                            Command="{Binding PingAllCommand}" IsEnabled="{Binding IsNotBusy}" Margin="0,0,8,0" />
+                                    <Button Content="{Binding Loc[RunPingSelected]}" Style="{StaticResource SecondaryButton}"
+                                            Command="{Binding PingSelectedCommand}" IsEnabled="{Binding IsNotBusy}" />
+                                </WrapPanel>
+
+                                <Border Style="{StaticResource Card}" Margin="0,14,0,0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[PublicIp]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="{Binding Loc[PublicIpWarning]}" Style="{StaticResource Muted}" Margin="0,5,0,0" />
+                                            <TextBlock Text="{Binding PublicIp}" FontSize="24" FontWeight="SemiBold" Margin="0,8,0,0" />
+                                        </StackPanel>
+                                        <Button Grid.Column="1" Content="{Binding Loc[CheckPublicIp]}" Style="{StaticResource SecondaryButton}"
+                                                Command="{Binding CheckPublicIpCommand}" IsEnabled="{Binding IsNotBusy}" VerticalAlignment="Center" />
+                                    </Grid>
+                                </Border>
+
+                                <TextBlock Text="{Binding Loc[RecentProbes]}" Style="{StaticResource H2}" Margin="0,18,0,0" />
+                                <Border Style="{StaticResource Card}" Margin="0,10,0,0" Padding="10">
+                                    <ListView Height="220" ItemsSource="{Binding RecentProbes}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Time" Width="80" DisplayMemberBinding="{Binding TimeText}" />
+                                                <GridViewColumn Header="Server" Width="260" DisplayMemberBinding="{Binding ServerName}" />
+                                                <GridViewColumn Header="Method" Width="150" DisplayMemberBinding="{Binding Method}" />
+                                                <GridViewColumn Header="Result" Width="300" DisplayMemberBinding="{Binding Result}" />
+                                                <GridViewColumn Header="Latency" Width="100" DisplayMemberBinding="{Binding LatencyText}" />
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Border>
+                            </StackPanel>
+
+                            <!-- ================= ROUTING ================= -->
+                            <StackPanel Visibility="{Binding PageKey, Converter={StaticResource PageVisibility}, ConverterParameter=Routing}">
+                                <TextBlock Text="{Binding Loc[RoutingModes]}" Style="{StaticResource H2}" />
+                                <WrapPanel Margin="0,10,0,0">
+                                    <Border Style="{StaticResource Card}" Width="300" Margin="0,0,12,12">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[FullTunnel]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="All supported traffic enters the tunnel, except essential local exceptions." Style="{StaticResource Muted}" Margin="0,5,0,0" />
+                                            <TextBlock Text="{Binding Loc[Planned]}" Style="{StaticResource Caption}" Foreground="{DynamicResource WarnBrush}" Margin="0,8,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource Card}" Width="300" Margin="0,0,12,12">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[SmartSplit]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="Selected Russian services go direct; other traffic goes through the tunnel." Style="{StaticResource Muted}" Margin="0,5,0,0" />
+                                            <TextBlock Text="{Binding Loc[Planned]}" Style="{StaticResource Caption}" Foreground="{DynamicResource WarnBrush}" Margin="0,8,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource Card}" Width="300" Margin="0,0,12,12">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[CustomRouting]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="User rules for domains, applications, IPs, and services." Style="{StaticResource Muted}" Margin="0,5,0,0" />
+                                            <TextBlock Text="{Binding Loc[Planned]}" Style="{StaticResource Caption}" Foreground="{DynamicResource WarnBrush}" Margin="0,8,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource Card}" Width="300" Margin="0,0,12,12">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[ProxyMode]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="Selected applications use an explicitly configured proxy." Style="{StaticResource Muted}" Margin="0,5,0,0" />
+                                            <TextBlock Text="{Binding Loc[Planned]}" Style="{StaticResource Caption}" Foreground="{DynamicResource WarnBrush}" Margin="0,8,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource Card}" Width="300" Margin="0,0,12,12">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[DirectMode]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="No tunnel; diagnostics remain available." Style="{StaticResource Muted}" Margin="0,5,0,0" />
+                                            <TextBlock Text="{Binding Loc[Planned]}" Style="{StaticResource Caption}" Foreground="{DynamicResource WarnBrush}" Margin="0,8,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                </WrapPanel>
+
+                                <Grid Margin="0,6,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Style="{StaticResource Card}">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[Precedence]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="{Binding Loc[PrecedenceText]}" Style="{StaticResource Body}" Margin="0,8,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Column="1" Style="{StaticResource Card}" Margin="16,0,0,0">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[RussianServices]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="{Binding Loc[RussianServicesText]}" Style="{StaticResource Body}" Margin="0,8,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+
+                            <!-- ================= SECURITY ================= -->
+                            <StackPanel Visibility="{Binding PageKey, Converter={StaticResource PageVisibility}, ConverterParameter=Security}">
+                                <UniformGrid Columns="2">
+                                    <Border Style="{StaticResource Card}" Margin="0,0,8,8">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[KillSwitchTitle]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="{Binding Loc[NotAvailable]}" Foreground="{DynamicResource DangerBrush}" FontWeight="SemiBold" Margin="0,6,0,0" />
+                                            <TextBlock Text="{Binding Loc[KillSwitchText]}" Style="{StaticResource Muted}" Margin="0,6,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource Card}" Margin="8,0,0,8">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[DnsTitle]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="{Binding Loc[NotTested]}" Foreground="{DynamicResource MutedBrush}" FontWeight="SemiBold" Margin="0,6,0,0" />
+                                            <TextBlock Text="{Binding Loc[DnsText]}" Style="{StaticResource Muted}" Margin="0,6,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource Card}" Margin="0,8,8,0">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[Ipv6Title]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="{Binding Loc[NotTested]}" Foreground="{DynamicResource MutedBrush}" FontWeight="SemiBold" Margin="0,6,0,0" />
+                                            <TextBlock Text="{Binding Loc[Ipv6Text]}" Style="{StaticResource Muted}" Margin="0,6,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource Card}" Margin="8,8,0,0">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[TrustTitle]}" Style="{StaticResource H3}" />
+                                            <TextBlock Text="{Binding Loc[Unknown]}" Foreground="{DynamicResource WarnBrush}" FontWeight="SemiBold" Margin="0,6,0,0" />
+                                            <TextBlock Text="{Binding Loc[TrustText]}" Style="{StaticResource Muted}" Margin="0,6,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                </UniformGrid>
+
+                                <Border Style="{StaticResource Card}" Margin="0,14,0,0">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Loc[LimitationsTitle]}" Style="{StaticResource H3}" />
+                                        <TextBlock Text="{Binding Loc[LimitationsText]}" Style="{StaticResource Body}" Margin="0,8,0,0" />
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+
+                            <!-- ================= SETTINGS ================= -->
+                            <StackPanel Visibility="{Binding PageKey, Converter={StaticResource PageVisibility}, ConverterParameter=Settings}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Style="{StaticResource Card}">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[Theme]}" Style="{StaticResource H3}" />
+                                            <ComboBox Margin="0,6,0,14" SelectedValue="{Binding Theme}" SelectedValuePath="Content">
+                                                <ComboBoxItem Content="System" />
+                                                <ComboBoxItem Content="Dark" />
+                                                <ComboBoxItem Content="Light" />
+                                            </ComboBox>
+
+                                            <TextBlock Text="{Binding Loc[Language]}" Style="{StaticResource H3}" />
+                                            <ComboBox Margin="0,6,0,14" SelectedValue="{Binding Language}" SelectedValuePath="Content">
+                                                <ComboBoxItem Content="System" />
+                                                <ComboBoxItem Content="English" />
+                                                <ComboBoxItem Content="Russian" />
+                                            </ComboBox>
+
+                                            <CheckBox Content="{Binding Loc[MinimizeToTray]}" IsChecked="{Binding MinimizeToTray}" />
+                                            <CheckBox Content="{Binding Loc[StartWithWindows]}" IsEnabled="False" />
+                                            <CheckBox Content="{Binding Loc[Updates]}" IsEnabled="False" />
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="1" Style="{StaticResource Card}" Margin="16,0,0,0">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Loc[About]}" Style="{StaticResource H3}" />
+                                            <Grid Margin="0,8,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="90" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Loc[Version]}" Style="{StaticResource Muted}" />
+                                                <TextBlock Grid.Column="1" Text="{Binding Version}" Style="{StaticResource Body}" />
+                                            </Grid>
+                                            <Grid Margin="0,6,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="90" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Loc[Engine]}" Style="{StaticResource Muted}" />
+                                                <TextBlock Grid.Column="1" Text="{Binding EngineStatus}" Style="{StaticResource Body}" />
+                                            </Grid>
+                                            <Grid Margin="0,6,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="90" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Loc[License]}" Style="{StaticResource Muted}" />
+                                                <TextBlock Grid.Column="1" Text="GPL-3.0-or-later" Style="{StaticResource Body}" />
+                                            </Grid>
+                                            <WrapPanel Margin="0,14,0,0">
+                                                <Button Content="{Binding Loc[OpenDocs]}" Style="{StaticResource SecondaryButton}"
+                                                        Command="{Binding OpenDocsCommand}" Margin="0,0,8,8" />
+                                                <Button Content="{Binding Loc[OpenLogs]}" Style="{StaticResource SecondaryButton}"
+                                                        Command="{Binding OpenDataFolderCommand}" Margin="0,0,8,8" />
+                                            </WrapPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <Border Style="{StaticResource Card}" Margin="0,14,0,0">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Loc[Logs]}" Style="{StaticResource H3}" />
+                                        <WrapPanel Margin="0,10,0,0">
+                                            <Button Content="{Binding Loc[ExportLogs]}" Style="{StaticResource SecondaryButton}"
+                                                    Command="{Binding ExportLogsCommand}" Margin="0,0,8,0" />
+                                            <Button Content="{Binding Loc[ClearLogs]}" Style="{StaticResource SecondaryButton}"
+                                                    Command="{Binding ClearLogsCommand}" />
+                                            <Button Content="{Binding Loc[ClearData]}" Style="{StaticResource SecondaryButton}"
+                                                    Command="{Binding ClearAllDataCommand}" Margin="8,0,0,0" />
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+
+                            <!-- ================= LOGS ================= -->
+                            <StackPanel Visibility="{Binding PageKey, Converter={StaticResource PageVisibility}, ConverterParameter=Logs}">
+                                <WrapPanel Margin="0,0,0,10">
+                                    <Button Content="{Binding Loc[ExportLogs]}" Style="{StaticResource SecondaryButton}"
+                                            Command="{Binding ExportLogsCommand}" Margin="0,0,8,0" />
+                                    <Button Content="{Binding Loc[ClearLogs]}" Style="{StaticResource SecondaryButton}"
+                                            Command="{Binding ClearLogsCommand}" />
+                                </WrapPanel>
+                                <Border Style="{StaticResource Card}" Padding="10">
+                                    <ListView Height="500" ItemsSource="{Binding Logs}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Time" Width="80" DisplayMemberBinding="{Binding TimeText}" />
+                                                <GridViewColumn Header="Level" Width="80" DisplayMemberBinding="{Binding Level}" />
+                                                <GridViewColumn Header="Message" Width="900" DisplayMemberBinding="{Binding Message}" />
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Border>
+                            </StackPanel>
+
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
+

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="Fulbr logo">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1220"/>
+      <stop offset="1" stop-color="#12243A"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5EEAD4"/>
+      <stop offset="1" stop-color="#38BDF8"/>
+    </linearGradient>
+  </defs>
+  <rect x="40" y="40" width="944" height="944" rx="220" fill="url(#bg)"/>
+  <rect x="41" y="41" width="942" height="942" rx="219" fill="none" stroke="#22304A" stroke-width="2"/>
+  <path d="M300 270 H700 L620 380 H440 V470 H620 L540 580 H440 V760 H300 Z" fill="url(#mark)"/>
+  <circle cx="716" cy="700" r="34" fill="#5EEAD4" opacity="0.85"/>
+</svg>

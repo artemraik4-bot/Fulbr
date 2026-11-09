@@ -1,0 +1,83 @@
+# Changelog
+
+All notable changes to Fulbr are documented here. The project is pre-1.0; interfaces and
+storage may change.
+
+## [Unreleased] — 0.3.0 service/TUN
+
+### Added
+
+- `Fulbr.Service` Windows service host with ACL'd named-pipe IPC.
+- Strict IPC command allow-list: `ping`, `status`, `start`, `stop`, `recover`.
+- TUN config builder (`auto_route`, `strict_route`, DoH via proxy, diagnostic inbound,
+  Clash API, local bootstrap resolver).
+- TUN config validated with the pinned `sing-box check`.
+- Wintun 0.14.1 downloaded, SHA-256 verified, and bundled under `engine-service/`.
+- Service install/uninstall scripts and VM deployment/test scripts.
+- Persistent WFP kill-switch design document.
+
+### Verified
+
+- IPC `ping`, `status`, and invalid-link rejection in console mode.
+- Full solution build with 0 warnings; 25/25 tests pass.
+
+### Not yet verified
+
+- TUN adapter creation, routes, DNS, sleep/resume, crash recovery in a Windows VM.
+- Persistent service-owned WFP kill switch (design only).
+- Service installation on the host (intentionally not performed).
+
+## [0.2.0] — 2026-11-09 — Proxy-mode prototype
+
+### Added
+
+- Pinned sing-box 1.14.4 engine (SHA-256 verified) bundled under `engine/`.
+- Real proxy-mode connection: mixed SOCKS/HTTP inbound with per-session authentication,
+  no TUN, no routes, no system proxy changes.
+- `SingBoxConfigBuilder` for VLESS/REALITY, Trojan, Shadowsocks, and VMess (WS/gRPC/HTTP
+  transports).
+- Real HTTP-through-proxy verification before the UI reports "Connected".
+- "Connect best (proxy)" tries up to five ranked candidates and reports each failure.
+- Local proxy endpoint + per-session username + masked password + copy URL.
+- Engine hash verification, `sing-box check` validation, orphan cleanup on startup.
+- Connection/disconnect logs persisted; runtime config deleted on stop.
+- 22 automated tests.
+
+### Security notes
+
+- Proxy mode refuses insecure TLS configurations and VLESS without TLS.
+- No kill switch, no DNS leak protection, and no system-wide tunnel in this mode.
+- The local proxy credentials are per-session; do not share them.
+
+## [0.1.0] — 2026-11-09 — Prototype
+
+### Added
+
+- Original Fulbr logo (SVG source, PNG sizes, multi-size ICO).
+- WPF/.NET 10 desktop shell with light/dark themes, custom chrome, tray icon, and
+  English/Russian UI.
+- Dashboard, Servers, Diagnostics, Routing, Subscriptions, Security, Settings, and Logs
+  pages.
+- Strict share-link parser for VLESS, VMess, Trojan, Shadowsocks, Hysteria2, TUIC, and
+  SOCKS5; Base64 subscription support; duplicate detection; insecure-cipher rejection.
+- Real HTTPS subscription fetching with ETag/Last-Modified, redirect limits, size limits,
+  and redacted logging.
+- Real TCP-connect and TLS-handshake probes with method labels and explicit
+  "not testable without engine" results for QUIC/UDP protocols.
+- Server ranking with Wilson lower bound, latency, stability, freshness, and failure
+  penalty.
+- DPAPI-protected server credentials and subscription URLs.
+- Inno Setup installer (`Fulbr-Setup.exe`) with Start Menu, optional desktop shortcut,
+  uninstaller, and Installed Apps registration.
+- 15 automated core tests; build with zero warnings.
+- Research, architecture, threat model, license audit, test plans, and performance
+  measurements.
+
+### Known limitations
+
+- No VPN tunnel, TUN adapter, Windows service, kill switch, split tunneling, DNS leak
+  test, or engine integration yet.
+- Connect button is disabled and labeled as the next phase.
+- Routing and Security pages describe the design; they do not enforce it.
+- The installer was compiled but not yet installed on the owner's PC.
+- No code signing certificate; artifacts are unsigned.

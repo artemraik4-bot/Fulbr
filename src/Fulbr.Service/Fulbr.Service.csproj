@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Fulbr.Service</AssemblyName>
+    <RootNamespace>Fulbr.Service</RootNamespace>
+    <Version>0.2.0</Version>
+    <Authors>Fulbr Contributors</Authors>
+    <Company>Fulbr</Company>
+    <Product>Fulbr Service</Product>
+    <Copyright>GPL-3.0-or-later</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.14" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="10.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fulbr.Core\Fulbr.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('..\..\vendor\sing-box\sing-box.exe')">
+    <None Include="..\..\vendor\sing-box\sing-box.exe" Link="engine-service\sing-box.exe"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="..\..\vendor\sing-box\libcronet.dll" Link="engine-service\libcronet.dll"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="..\..\vendor\sing-box\wintun.dll" Link="engine-service\wintun.dll"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="..\..\vendor\sing-box\LICENSE" Link="engine-service\LICENSE-sing-box.txt"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="..\..\vendor\sing-box\LICENSE-Wintun.txt" Link="engine-service\LICENSE-Wintun.txt"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
+
+

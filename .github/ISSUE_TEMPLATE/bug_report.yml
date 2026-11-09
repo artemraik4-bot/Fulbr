@@ -1,0 +1,46 @@
+name: Bug report
+description: Report a reproducible defect in Fulbr
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do **not** include credentials, private keys, tokens, or full subscription URLs.
+        Security vulnerabilities belong in the private process described in SECURITY.md.
+  - type: input
+    id: version
+    attributes:
+      label: Fulbr version / commit
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version and build
+      placeholder: "Windows 11 23H2, 22631.xxxx"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs
+      description: Remove UUIDs, passwords, tokens, and full URLs.

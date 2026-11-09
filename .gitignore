@@ -1,0 +1,60 @@
+# Build output
+bin/
+obj/
+artifacts/
+publish/
+*.user
+*.suo
+.vs/
+
+# Local/runtime data
+runtime/
+data/
+logs/
+*.db
+*.db-shm
+*.db-wal
+
+# Secrets and local config
+.env
+*.secret
+secrets/
+appsettings.Local.json
+
+# Vendor binaries are pinned and downloaded by scripts; do not commit large binaries by default.
+vendor/*.zip
+vendor/*.exe
+vendor/*.dll
+vendor/**/*.exe
+vendor/**/*.dll
+vendor/**/*.zip
+vendor/extract/
+vendor/wintun-extract/
+!vendor/MANIFEST.json
+!vendor/README.md
+
+# Installer output
+installer/Output/
+*.exe
+*.msi
+*.msix
+
+vm/*.iso
+vm/*.vdi
+vm/*.vbox
+vm/*.log
+vm/bits-*.txt
+vm/
+*.iso
+*.vdi
+*.sav
+SessionExport.json
+SessionExport.err.txt
+
+
+# IDE
+.idea/
+*.swp
+vm/test-link.txt
+vm/*.png
+vm/service-test.log
