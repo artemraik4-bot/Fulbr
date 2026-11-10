@@ -110,13 +110,17 @@ public sealed class SingBoxConfigBuilder
                 });
             }
 
+            var logObject = new System.Text.Json.Nodes.JsonObject
+            {
+                ["level"] = options.LogLevel,
+                ["timestamp"] = true
+            };
+            if (!string.IsNullOrWhiteSpace(options.LogPath))
+                logObject["output"] = options.LogPath;
+
             var root = new System.Text.Json.Nodes.JsonObject
             {
-                ["log"] = new System.Text.Json.Nodes.JsonObject
-                {
-                    ["level"] = "warn",
-                    ["timestamp"] = true
-                },
+                ["log"] = logObject,
                 ["dns"] = new System.Text.Json.Nodes.JsonObject
                 {
                     ["servers"] = new System.Text.Json.Nodes.JsonArray

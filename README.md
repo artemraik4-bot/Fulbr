@@ -115,6 +115,7 @@ Wintun, Happ, or Zapret projects. Third-party components keep their own licenses
 | [`docs/security/dns-ipv6-leak-testing.md`](docs/security/dns-ipv6-leak-testing.md) | Leak test plan (not yet executed) |
 | [`docs/security/connection-failure-policy.md`](docs/security/connection-failure-policy.md) | Kill switch and recovery policy |
 | [`docs/development/environment.md`](docs/development/environment.md) | Machine inspection and setup plan |
+| [`docs/development/tun-host-test-2026-11-10.md`](docs/development/tun-host-test-2026-11-10.md) | TUN host test result (partial) |
 | [`ROADMAP.md`](ROADMAP.md) | Phased plan and acceptance criteria |
 | [`IMPLEMENTATION_STATUS.md`](IMPLEMENTATION_STATUS.md) | What is actually done |
 | [`NEXT_STEPS.md`](NEXT_STEPS.md) | Immediate next actions |

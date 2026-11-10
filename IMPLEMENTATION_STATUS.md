@@ -14,8 +14,9 @@
 | Tests | **25/25 passing** |
 | Service | `Fulbr.Service` built; named-pipe `ping`/`status`/validation smoke-tested |
 | TUN config | Generated and validated by pinned `sing-box check` |
+| TUN host test | **Partial:** adapter/routes/DNS/cleanup passed; payload traffic and DNS through TUN timed out |
 | Wintun | 0.14.1 downloaded, SHA-256 verified, bundled under `engine-service/` |
-| TUN runtime | **Not yet VM-tested** (Windows ISO downloading; no Windows VM yet) |
+| TUN runtime | **Not fully verified**; no payload/DNS claim. See `docs/development/tun-host-test-2026-11-10.md` |
 | Kill switch | **Not implemented**; `strict_route` only, engine-scoped |
 | UI | Runnable, bilingual (EN/RU), light/dark, tray, original logo |
 | Subscription import | Real HTTPS fetch + parse |
@@ -63,7 +64,13 @@ endpoint.
   diagnostic inbound, Clash API, and a local bootstrap resolver.
 - The generated TUN config passes `sing-box check` with the pinned engine.
 - Wintun 0.14.1 is verified and copied beside the service engine.
-- **TUN creation/routes/DNS are not yet tested** because no Windows VM/ISO was ready.
+- **TUN creation/routes/DNS are partially verified on the host**:
+  adapter `Fulbr`, default IPv4/IPv6 routes, DNS assignment, and cleanup all passed; payload
+  DNS/HTTPS timed out and is **not** verified. See
+  `docs/development/tun-host-test-2026-11-10.md`.
+- Two clean Windows 11 26H2 VMs stalled at ~42% with no disk I/O and were saved; no Windows
+  VM test is currently available. Try a different Windows image/hypervisor before another
+  VM run.
 - **No persistent WFP kill switch yet**; `strict_route` is engine-scoped.
 
 Do not describe TUN mode as verified or fail-closed until the VM test is complete.

@@ -128,13 +128,20 @@ public sealed class TunnelEngine
             var password = Convert.ToHexString(RandomNumberGenerator.GetBytes(18)).ToLowerInvariant();
             var apiSecret = Convert.ToHexString(RandomNumberGenerator.GetBytes(18)).ToLowerInvariant();
 
+            var logPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "Fulbr", "logs", "engine.log");
+            Directory.CreateDirectory(Path.GetDirectoryName(logPath)!);
+
             var options = new TunOptions(
                 InterfaceName: name,
                 DiagnosticPort: diagnosticsPort,
                 DiagnosticUsername: username,
                 DiagnosticPassword: password,
                 ClashApiPort: clashPort,
-                ClashApiSecret: apiSecret);
+                ClashApiSecret: apiSecret,
+                LogLevel: "debug",
+                LogPath: logPath);
 
             if (!_builder.TryBuildTun(server, options, out var json, out var buildError))
                 return Fail(buildError ?? "Could not build the TUN configuration.");

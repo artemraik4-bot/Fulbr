@@ -5,6 +5,20 @@ storage may change.
 
 ## [Unreleased] — 0.3.0 service/TUN
 
+### 2026-11-10
+
+- Verified TUN adapter creation, IPv4/IPv6 default routes, DNS assignment, and cleanup in a
+  temporary elevated host test (no service/WFP installation).
+- Fixed a real TUN subnet collision: `172.19.0.1/30` clashed with Happ/xray; Fulbr now uses
+  `10.255.255.1/30` and `fdfe:dcba:9876:1::1/126`.
+- Added bounded sing-box debug logging (`%ProgramData%\Fulbr\logs\engine.log`) for TUN
+  diagnostics.
+- Parameterized the VM test watcher and added `tools/host-tun-test.ps1`.
+- TUN payload DNS/HTTPS still times out; **not verified**. See
+  `docs/development/tun-host-test-2026-11-10.md`.
+- Two clean Windows 11 26H2 VM installs stalled at ~42% with no disk I/O; VMs saved.
+- Tests: 25/25 passing; build 0 warnings/0 errors.
+
 ### Added
 
 - `Fulbr.Service` Windows service host with ACL'd named-pipe IPC.

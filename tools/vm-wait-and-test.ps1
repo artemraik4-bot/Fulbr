@@ -1,8 +1,14 @@
+param(
+    [string]$VmName = 'FulbrWin11',
+    [string]$GuestUser = 'fulbr',
+    [string]$GuestPassword = $env:FULBR_VM_PASSWORD
+)
+
 $ErrorActionPreference = 'Continue'
 $vbm = 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe'
-$vm = 'FulbrWin11'
-$user = 'fulbr'
-$pass = $env:FULBR_VM_PASSWORD
+$vm = $VmName
+$user = $GuestUser
+$pass = $GuestPassword
 if ([string]::IsNullOrWhiteSpace($pass)) { throw 'Set FULBR_VM_PASSWORD before running this script.' }
 $repo = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $log = Join-Path $repo 'vm\service-test.log'
@@ -16,7 +22,7 @@ function Log([string]$message) {
 Log 'Waiting for Guest Additions / guest control to become available...'
 $ready = $false
 for ($i = 0; $i -lt 60; $i++) {
-    $output = & $vbm guestcontrol $vm stat --username $user --password $pass 2>&1
+    $output = & $vbm guestcontrol $vm stat --username $user --password $pass 'C:\Windows\System32\cmd.exe' 2>&1
     if ($LASTEXITCODE -eq 0) {
         $ready = $true
         Log 'Guest is ready.'
