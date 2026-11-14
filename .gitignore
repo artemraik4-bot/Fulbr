@@ -62,3 +62,5 @@ vm/service-test.log
 # Internal development handoff and session history (never publish)
 session-backup/
 docs/handoff/
+
+tools/*.log
