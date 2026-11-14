@@ -100,28 +100,29 @@ was fixed in `1b2db90`, and the rerun passed.
 
 | Item | Status |
 |---|---|
-| Local Git history | Intact, HEAD `1b2db90`, remote `origin` configured |
+| Local development tree | Deleted after verified public migration |
+| Local Git access | Via GitHub; latest commit `2ecea05` |
 | Installed Fulbr 0.2.0 | Intact at `%LOCALAPPDATA%\Programs\Fulbr` |
-| Desktop shortcut | Intact at `C:\Users\user\Desktop\Fulbr.lnk` |
-| Installer | Copied to `Z:\Fulbr\Fulbr-Setup.exe` (D: is absent) |
-| Test VMs | Saved, untouched |
-| Local deletion | **Not started**; requires approval of the exact list |
+| Desktop shortcut | Intact at `%USERPROFILE%\Desktop\Fulbr.lnk` |
+| Installer | `<backup-root>\Fulbr-Setup.exe` (D: is absent) |
+| Test VMs | Deleted with explicit approval; none remain |
+| Local cleanup | Executed 2026-11-14 |
 
-`D:\Fulbr\Fulbr-Setup.exe` could not be created because the machine has no D: drive. The
-installer is available at `Z:\Fulbr\Fulbr-Setup.exe`, SHA-256
+The requested `D:\Fulbr\Fulbr-Setup.exe` could not be created because the machine has no D:
+drive. The installer is available at `<backup-root>\Fulbr-Setup.exe`, SHA-256
 `5BAA1180E64700C9E19A0B3966FA59B2E01FF13C368B3C727C8ED6A064E4E7E7`.
 
 ## 6. Recovery assets
 
 - Public-history bundle (safe to share):
-  `Z:\Fulbr\Backups\Fulbr_git_public_2026-11-14.bundle`
+  `<backup-root>\Backups\Fulbr_git_public_2026-11-14.bundle`
   - SHA-256 `5DBB7E290668B6610556335A29296A351EA5ADC5C889018C386894228640496B`
-- Project backup with internal handoff/session material (do **not** publish):
-  `Z:\Fulbr\Backups\Fulbr_2026-11-14_105630`
-- Private pre-rewrite history archive (contains the excluded handoff/session files; do
-  **not** publish): `Z:\Fulbr\Backups\Fulbr_git_private-archive_2026-11-14.bundle`
-- Previous backups: `Z:\Fulbr\Backups\Fulbr_2026-11-10_213201`,
-  `Z:\Fulbr\Backups\Fulbr_2026-11-09_232639`.
+- Latest full project backup (contains internal handoff/session material; do **not**
+  publish): `<backup-root>\Backups\Fulbr_2026-11-14_112351`
+- Internal handoff/session archive: `<backup-root>\SessionBackup`
+
+Older backups, the VM/ISO backup, and the pre-rewrite private-history bundle were removed
+during the approved cleanup on 2026-11-14.
 
 Restore anywhere:
 
