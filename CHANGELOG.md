@@ -13,6 +13,9 @@ storage may change.
 - CI now fetches pinned vendor binaries, builds and verifies the service payload, and
   packages the installer when Inno Setup is available.
 - Removed hard-coded personal paths from development scripts.
+- **GitHub migration blocked:** repository creation is denied for the authorized account
+  by a U.S. trade-controls restriction (HTTP 422). No push, no cleanup. Details in
+  `docs/development/github-migration-2026-11-14.md`.
 
 ### 2026-11-10
 

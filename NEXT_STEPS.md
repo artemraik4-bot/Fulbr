@@ -1,10 +1,15 @@
 # Next Steps
 
-**Date:** 2026-11-10
+**Date:** 2026-11-14
 **Current state:** 0.2.0 proxy mode works and is installed. 0.3.0 service/TUN code is
 built; TUN adapter/routes/DNS/cleanup were verified in a temporary elevated host test, but
 payload DNS/HTTPS through the TUN timed out and is **not verified**. No service or WFP is
 installed on the host.
+
+> **GitHub migration is blocked.** GitHub rejects repository creation for the authorized
+> account with a U.S. trade-controls restriction (HTTP 422). Nothing was pushed; no local
+> files were deleted. See
+> [`docs/development/github-migration-2026-11-14.md`](docs/development/github-migration-2026-11-14.md).
 
 ---
 
