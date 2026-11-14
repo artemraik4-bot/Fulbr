@@ -49,21 +49,40 @@ public sealed class RankingAndProbeTests
         var port = ((System.Net.IPEndPoint)listener.LocalEndpoint).Port;
         var accept = Task.Run(async () =>
         {
-            using var client = await listener.AcceptTcpClientAsync();
-            client.Close();
+            using var client = await listener.AcceptTcpClientAsync()
+                .WaitAsync(TimeSpan.FromSeconds(10));
         });
 
-        var server = new ServerCandidate(
-            ProxyProtocol.Shadowsocks, "127.0.0.1", port, "local", "ss://x", "fp",
-            null, null, null, null, false, false, Array.Empty<string>());
+        try
+        {
+            var server = new ServerCandidate(
+                ProxyProtocol.Shadowsocks, "127.0.0.1", port, "local", "ss://x", "fp",
+                null, null, null, null, false, false, Array.Empty<string>());
 
-        var result = await new EndpointProbe().TcpConnectAsync(server, TimeSpan.FromSeconds(3));
-        listener.Stop();
-        await accept;
+            var result = await new EndpointProbe().TcpConnectAsync(server, TimeSpan.FromSeconds(3));
 
-        Assert.True(result.Success);
-        Assert.Equal("TCP connect", result.Method);
-        Assert.NotNull(result.LatencyMs);
+            // Let the accept finish before stopping the listener; Stop() aborts a pending accept.
+            if (result.Success)
+            {
+                await accept.WaitAsync(TimeSpan.FromSeconds(5));
+            }
+
+            Assert.True(result.Success);
+            Assert.Equal("TCP connect", result.Method);
+            Assert.NotNull(result.LatencyMs);
+        }
+        finally
+        {
+            listener.Stop();
+            try
+            {
+                await accept.WaitAsync(TimeSpan.FromSeconds(1));
+            }
+            catch
+            {
+                // The accept is expected to fail if the probe did not connect before cleanup.
+            }
+        }
     }
 
     [Fact]
