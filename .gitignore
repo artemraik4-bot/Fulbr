@@ -58,3 +58,7 @@ SessionExport.err.txt
 vm/test-link.txt
 vm/*.png
 vm/service-test.log
+
+# Internal development handoff and session history (never publish)
+session-backup/
+docs/handoff/

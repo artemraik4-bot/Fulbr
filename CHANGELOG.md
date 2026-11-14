@@ -9,7 +9,8 @@ storage may change.
 
 - Added `tools/fetch-vendor.ps1` for reproducible, SHA-256-verified download of the pinned
   sing-box and Wintun binaries (no large binaries in Git).
-- Added root `ARCHITECTURE.md`, `docs/handoff/` snapshot, and sanitized `session-backup/`.
+- Added root `ARCHITECTURE.md`, `KNOWN_ISSUES.md`, and `tools/fetch-vendor.ps1`; internal
+  handoff and session-history copies are intentionally kept out of the public repository.
 - CI now fetches pinned vendor binaries, builds and verifies the service payload, and
   packages the installer when Inno Setup is available.
 - Removed hard-coded personal paths from development scripts.

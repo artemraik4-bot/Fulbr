@@ -6,7 +6,7 @@ architecture. Detailed design documents are linked below.
 **Status:** 0.2.0 proxy mode is implemented and installed. 0.3.0 service/TUN code is
 built; TUN adapter/routes/DNS/cleanup are verified, TUN **payload** traffic is not.
 See [`IMPLEMENTATION_STATUS.md`](IMPLEMENTATION_STATUS.md) and
-[`KNOWN_ISSUES.md`](docs/handoff/KNOWN_ISSUES.md).
+[`KNOWN_ISSUES.md`](KNOWN_ISSUES.md).
 
 ---
 

@@ -16,8 +16,9 @@ Move the complete Fulbr project and Git history to a **private** GitHub reposito
     archive and binary SHA-256, places them in `artifacts/`.
   - `vendor/README.md` — pinned-binary policy and licensing note.
   - `ARCHITECTURE.md` — current-state architecture at the repository root.
-  - `docs/handoff/` — sanitized 2026-11-10 handoff snapshot plus `README.md`.
-  - `session-backup/` — sanitized session export plus `README.md`.
+  - `KNOWN_ISSUES.md` — public, sanitized limitations summary.
+  - Internal `docs/handoff/` and `session-backup/` copies were prepared and then excluded
+    from the public repository; they remain in the local backups only.
   - `.github/workflows/ci.yml` — vendor fetch, app + service publish, payload checks,
     installer packaging when Inno Setup is present.
   - Removed hard-coded personal paths from four development scripts.
