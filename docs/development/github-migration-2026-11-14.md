@@ -113,10 +113,13 @@ installer is available at `Z:\Fulbr\Fulbr-Setup.exe`, SHA-256
 
 ## 6. Recovery assets
 
-- Current full-history bundle (public history):
-  `Z:\Fulbr\Backups\Fulbr_git_2026-11-14.bundle`
+- Public-history bundle (safe to share):
+  `Z:\Fulbr\Backups\Fulbr_git_public_2026-11-14.bundle`
+  - SHA-256 `5DBB7E290668B6610556335A29296A351EA5ADC5C889018C386894228640496B`
 - Project backup with internal handoff/session material (do **not** publish):
   `Z:\Fulbr\Backups\Fulbr_2026-11-14_105630`
+- Private pre-rewrite history archive (contains the excluded handoff/session files; do
+  **not** publish): `Z:\Fulbr\Backups\Fulbr_git_private-archive_2026-11-14.bundle`
 - Previous backups: `Z:\Fulbr\Backups\Fulbr_2026-11-10_213201`,
   `Z:\Fulbr\Backups\Fulbr_2026-11-09_232639`.
 
