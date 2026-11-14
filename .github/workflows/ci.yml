@@ -2,9 +2,13 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build-test:
@@ -29,13 +33,62 @@ jobs:
       - name: Vulnerable packages
         run: dotnet list package --vulnerable --include-transitive
 
-      - name: Publish self-contained
+      - name: Fetch pinned vendor binaries
+        shell: pwsh
+        run: ./tools/fetch-vendor.ps1
+
+      - name: Publish app (self-contained)
         run: >
           dotnet publish src/Fulbr.App/Fulbr.App.csproj -c Release -r win-x64
           --self-contained true -p:PublishSingleFile=false -o artifacts/app
 
+      - name: Publish service (self-contained)
+        run: >
+          dotnet publish src/Fulbr.Service/Fulbr.Service.csproj -c Release -r win-x64
+          --self-contained true -p:PublishSingleFile=false -o artifacts/service
+
+      - name: Verify service payload
+        shell: pwsh
+        run: |
+          $required = @(
+            'artifacts/service/Fulbr.Service.exe',
+            'artifacts/service/engine-service/sing-box.exe',
+            'artifacts/service/engine-service/wintun.dll',
+            'artifacts/app/Fulbr.exe',
+            'artifacts/app/engine/sing-box.exe'
+          )
+          foreach ($file in $required) {
+            if (-not (Test-Path $file)) { throw "Missing build output: $file" }
+          }
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          $iscc = 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
+          if (-not (Test-Path $iscc)) {
+            Write-Host 'Inno Setup not installed on runner; skipping installer.'
+            exit 0
+          }
+          & $iscc 'installer/Fulbr.iss'
+          if (-not (Test-Path 'artifacts/installer/Fulbr-Setup.exe')) {
+            throw 'Installer was not produced'
+          }
+
       - name: Upload app artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Fulbr-win-x64
+          name: Fulbr-app-win-x64
           path: artifacts/app
+
+      - name: Upload service artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fulbr-service-win-x64
+          path: artifacts/service
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        if: hashFiles('artifacts/installer/Fulbr-Setup.exe') != ''
+        with:
+          name: Fulbr-installer-win-x64
+          path: artifacts/installer/Fulbr-Setup.exe

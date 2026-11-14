@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Stop'
 $vbm = 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe'
 $vm = 'FulbrWin11'
-$dir = 'C:\Users\user\Fulbr\vm'
+$dir = Join-Path (Split-Path -Parent $PSScriptRoot) 'vm'
 $iso = Join-Path $dir 'Win11Eval.iso'
 $jobIdFile = Join-Path $dir 'bits-job-id.txt'
 $log = Join-Path $dir 'vm-install.log'

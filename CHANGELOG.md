@@ -5,6 +5,15 @@ storage may change.
 
 ## [Unreleased] — 0.3.0 service/TUN
 
+### 2026-11-14
+
+- Added `tools/fetch-vendor.ps1` for reproducible, SHA-256-verified download of the pinned
+  sing-box and Wintun binaries (no large binaries in Git).
+- Added root `ARCHITECTURE.md`, `docs/handoff/` snapshot, and sanitized `session-backup/`.
+- CI now fetches pinned vendor binaries, builds and verifies the service payload, and
+  packages the installer when Inno Setup is available.
+- Removed hard-coded personal paths from development scripts.
+
 ### 2026-11-10
 
 - Verified TUN adapter creation, IPv4/IPv6 default routes, DNS assignment, and cleanup in a

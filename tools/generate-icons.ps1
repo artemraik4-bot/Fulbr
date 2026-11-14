@@ -1,6 +1,7 @@
 Add-Type -AssemblyName System.Drawing
 
-$outDir = 'C:\Users\user\Fulbr\src\Fulbr.App\Assets'
+$root = Split-Path -Parent $PSScriptRoot
+$outDir = Join-Path $root 'src\Fulbr.App\Assets'
 New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 
 function New-RoundedRectPath([float]$x, [float]$y, [float]$w, [float]$h, [float]$r) {

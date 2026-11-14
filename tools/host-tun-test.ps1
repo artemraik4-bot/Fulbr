@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Continue'
-$root = 'C:\Users\user\Fulbr'
+$root = Split-Path -Parent $PSScriptRoot
 $log = Join-Path $root 'vm\host-tun-test.log'
 $svcExe = Join-Path $root 'artifacts\service\Fulbr.Service.exe'
 $pipeTest = Join-Path $root 'tools\test-service-pipe.ps1'

@@ -1,6 +1,5 @@
 $ErrorActionPreference = 'Continue'
-$log = 'C:\Users\user\Fulbr\tools\install-toolchain.log'
-New-Item -ItemType Directory -Force -Path 'C:\Users\user\Fulbr\tools' | Out-Null
+$log = Join-Path $PSScriptRoot 'install-toolchain.log'
 Start-Transcript -Path $log -Force
 
 function Install-Package {

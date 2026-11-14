@@ -24,7 +24,7 @@ tunneling.**
 - 67 real TCP/TLS probes: 50 reachable, 17 failed/unavailable.
 - **Real proxy connection verified** through VLESS and VMess candidates; HTTP-through-proxy
   check passes before "Connected" is shown.
-- 22/22 automated tests passing; build with 0 warnings.
+- 25/25 automated tests passing; build with 0 warnings.
 - Startup ~880–924 ms; ~127 MB working set; 0% idle CPU (measured, see
   [`docs/performance/benchmarks.md`](docs/performance/benchmarks.md)).
 - Installer: `artifacts/installer/Fulbr-Setup.exe` (68.53 MB, unsigned, per-user).
@@ -38,8 +38,9 @@ tunneling, DNS/IPv6 leak tests, speed test, scheduled refresh, SQLite.
 - `Fulbr.Service` is built: ACL'd named pipe, strict command allow-list, TUN engine
   supervision, Wintun bundled, TUN config validated by pinned `sing-box check`.
 - IPC `ping`/`status`/invalid-link rejection are smoke-tested.
-- **TUN adapter/routes/DNS are not yet verified.** A Windows 11 VirtualBox VM is being
-  installed for that test; the host has no Fulbr service, driver, or WFP filter installed.
+- **TUN adapter/routes/DNS/cleanup are verified on the host; payload DNS/HTTPS timed out and
+  is not verified.** See
+  [`docs/development/tun-host-test-2026-11-10.md`](docs/development/tun-host-test-2026-11-10.md).
 - The persistent WFP kill switch is designed but not implemented; see
   [`docs/security/wfp-killswitch-design.md`](docs/security/wfp-killswitch-design.md).
 
@@ -125,11 +126,17 @@ Wintun, Happ, or Zapret projects. Third-party components keep their own licenses
 ## Building
 
 ```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\fetch-vendor.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File tools\build-release.ps1
 ```
 
-This restores locked packages, runs tests, publishes a self-contained `win-x64` build to
-`artifacts/app`, and compiles `artifacts/installer/Fulbr-Setup.exe` with Inno Setup 6.
+`fetch-vendor.ps1` downloads the pinned sing-box 1.14.4 and Wintun 0.14.1 binaries and
+verifies their SHA-256 against [`vendor/MANIFEST.json`](vendor/MANIFEST.json). They are not
+committed to Git.
+
+`build-release.ps1` restores locked packages, runs tests, publishes a self-contained
+`win-x64` build to `artifacts/app`, and compiles `artifacts/installer/Fulbr-Setup.exe` with
+Inno Setup 6. Build the privileged payload with `tools\build-service.ps1`.
 Toolchain details and approval requirements are in
 [`docs/development/environment.md`](docs/development/environment.md).
 
