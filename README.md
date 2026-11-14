@@ -1,5 +1,8 @@
 # Fulbr
 
+[![CI](https://github.com/artemraik4-bot/Fulbr/actions/workflows/ci.yml/badge.svg)](https://github.com/artemraik4-bot/Fulbr/actions/workflows/ci.yml)
+[![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg)](LICENSE)
+
 **A privacy-focused Windows VPN and proxy client with honest diagnostics and smart split
 tunneling.**
 
@@ -152,14 +155,14 @@ Installation on the owner's PC is performed only after explicit approval.
 
 ## Contributing
 
-Contribution guidelines, code of conduct, security policy, and issue/PR templates will be
-added before the first public release. Until then, treat this repository as a design
-record.
+Read [`CONTRIBUTING.md`](CONTRIBUTING.md), [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md), and
+[`SECURITY.md`](SECURITY.md) before opening an issue or pull request. Bug reports and
+feature requests use the templates in `.github/ISSUE_TEMPLATE/`.
 
 ## License
 
-GPL-3.0-or-later. See `LICENSE` (to be added from the official GNU text) and
-`THIRD-PARTY-NOTICES.md` (to be generated from the dependency audit).
+GPL-3.0-or-later. See [`LICENSE`](LICENSE) and
+[`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).
 
 ## Security disclaimer
 

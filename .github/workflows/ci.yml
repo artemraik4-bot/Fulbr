@@ -1,4 +1,4 @@
-name: CI
+﻿name: CI
 
 on:
   push:
@@ -14,10 +14,10 @@ jobs:
   build-test:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '10.0.403'
 
@@ -75,19 +75,19 @@ jobs:
           }
 
       - name: Upload app artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Fulbr-app-win-x64
           path: artifacts/app
 
       - name: Upload service artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Fulbr-service-win-x64
           path: artifacts/service
 
       - name: Upload installer artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: hashFiles('artifacts/installer/Fulbr-Setup.exe') != ''
         with:
           name: Fulbr-installer-win-x64

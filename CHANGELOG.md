@@ -7,6 +7,11 @@ storage may change.
 
 ### 2026-11-14
 
+- Published the project publicly at <https://github.com/artemraik4-bot/Fulbr>; CI is green.
+  Private creation was blocked by the account's U.S. trade-controls restriction, so the
+  owner approved public publication with session history excluded.
+- Removed internal handoff/session files and the local toolchain log from all Git history.
+- Fixed a flaky TCP probe test (accept/listener race) found by CI.
 - Added `tools/fetch-vendor.ps1` for reproducible, SHA-256-verified download of the pinned
   sing-box and Wintun binaries (no large binaries in Git).
 - Added root `ARCHITECTURE.md`, `KNOWN_ISSUES.md`, and `tools/fetch-vendor.ps1`; internal
@@ -14,9 +19,6 @@ storage may change.
 - CI now fetches pinned vendor binaries, builds and verifies the service payload, and
   packages the installer when Inno Setup is available.
 - Removed hard-coded personal paths from development scripts.
-- **GitHub migration blocked:** repository creation is denied for the authorized account
-  by a U.S. trade-controls restriction (HTTP 422). No push, no cleanup. Details in
-  `docs/development/github-migration-2026-11-14.md`.
 
 ### 2026-11-10
 

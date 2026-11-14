@@ -127,7 +127,7 @@ Do not describe TUN mode as verified or fail-closed until the VM test is complet
 | Scheduled subscription refresh | Not implemented |
 | SQLite storage | Not implemented (JSON + DPAPI prototype) |
 | Code signing | Not available |
-| GitHub publication | Not performed |
+| GitHub publication | Public repository: <https://github.com/artemraik4-bot/Fulbr> (2026-11-14); CI passing. Private creation unavailable on this account (trade controls). |
 
 ---
 
@@ -155,7 +155,8 @@ Do not describe TUN mode as verified or fail-closed until the VM test is complet
 1. ~~Upgrade the installed 0.1.0 to the 0.2.0 proxy-mode build.~~ Done and verified.
 2. Download Wintun 0.14.1 when TUN work begins.
 3. Register the Fulbr Windows service and create a TUN adapter (later, separate approval).
-4. Publish the GitHub repository (later, separate approval).
+4. ~~Publish the GitHub repository.~~ Published publicly on 2026-11-14 with owner approval;
+   private creation was blocked by the account's trade-controls restriction.
 5. Provide a Windows 10/11 VM or ISO for privileged TUN/service/WFP testing (blocker).
 
 ---
